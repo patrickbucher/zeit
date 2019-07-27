@@ -5,8 +5,11 @@
 
 timespan to_timespan(time_t start, time_t end)
 {
-	const char *datefmt = "%Y-%m-%d %H:%M:%S";
-	const int datelen = strlen("2000-01-01 00:00:00") + 1;
+	const char *datetimefmt = "%Y-%m-%d %H:%M:%S";
+	const int datetimelen = strlen("2000-01-01 00:00:00") + 1;
+
+	const char *datefmt = "%Y-%m-%d";
+	const int datelen = strlen("2000-01-01") + 1;
 
 	int diff = end - start;
 
@@ -16,14 +19,17 @@ timespan to_timespan(time_t start, time_t end)
 	tmp = localtime(&end);
 	memcpy(&to, tmp, sizeof(*tmp));
 
-	char *from_str = (char *)malloc(datelen * sizeof(char));
-	char *to_str = (char *)malloc(datelen * sizeof(char));
-	strftime(from_str, datelen, datefmt, &from);
-	strftime(to_str, datelen, datefmt, &to);
+	char *start_date = (char *)malloc(datelen * sizeof(char));
+	char *from_str = (char *)malloc(datetimelen * sizeof(char));
+	char *to_str = (char *)malloc(datetimelen * sizeof(char));
+	strftime(start_date, datelen, datefmt, &from);
+	strftime(from_str, datetimelen, datetimefmt, &from);
+	strftime(to_str, datetimelen, datetimefmt, &to);
 
 	timespan span;
-	span.from_date = from_str;
-	span.to_date = to_str;
+	span.start_date = start_date;
+	span.from_datetime = from_str;
+	span.to_datetime = to_str;
 	span.dur = to_duration(diff);
 
 	return span;

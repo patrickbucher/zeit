@@ -9,8 +9,9 @@ typedef struct {
 
 typedef struct {
 	duration dur;
-	char *from_date;
-	char *to_date;
+	char *start_date;
+	char *from_datetime;
+	char *to_datetime;
 } timespan;
 
 timespan to_timespan(time_t start, time_t end);

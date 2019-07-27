@@ -45,13 +45,17 @@ int main(int argc, char *argv[])
 	time(&end);
 
 	timespan ts = to_timespan(start, end);
-	printf("\nfrom %s to %s worked %02d:%02d:%02d on %s\n", ts.from_date,
-			ts.to_date, ts.dur.hours, ts.dur.minutes, ts.dur.seconds, project);
+	printf("\nfrom %s to %s worked %02d:%02d:%02d on %s\n",
+			ts.from_datetime, ts.to_datetime,
+			ts.dur.hours, ts.dur.minutes, ts.dur.seconds,
+			project);
+	printf("%s\n", ts.start_date);
 
 	free(project);
 	free(workdir);
-	free(ts.from_date);
-	free(ts.to_date);
+	free(ts.start_date);
+	free(ts.from_datetime);
+	free(ts.to_datetime);
 
 	return EXIT_SUCCESS;
 }
