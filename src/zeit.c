@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
 	if (!dir_exists(workdir)) {
 		if (mkdir(workdir, 0700) == -1) {
 			fprintf(stderr, "create dir %s: %s\n", workdir, strerror(errno));
+			exit(EXIT_FAILURE);
 		}
 	}
 
@@ -45,17 +46,29 @@ int main(int argc, char *argv[])
 	time(&end);
 
 	timespan ts = to_timespan(start, end);
-	printf("\nfrom %s to %s worked %02d:%02d:%02d on %s\n",
-			ts.from_datetime, ts.to_datetime,
-			ts.dur.hours, ts.dur.minutes, ts.dur.seconds,
-			project);
-	printf("%s\n", ts.start_date);
+	char *dur_str = (char *)malloc(sizeof(char) * 9);
+	snprintf(dur_str, 9, "%02d:%02d:%02d",
+			ts.dur.hours, ts.dur.minutes, ts.dur.seconds);
+	printf("\nfrom %s to %s worked %s on %s\n",
+			ts.from_datetime, ts.to_datetime, dur_str, project);
+
+	char *filepath = get_file_path(workdir, ts.start_date, "csv");
+	FILE *file = fopen(filepath, "a+");
+	if (!file) {
+		fprintf(stderr, "unable to open %s for appending\n", filepath);
+		exit(EXIT_FAILURE);
+	}
+	fprintf(file, "%s,%s,%s,%s\n", ts.from_datetime, ts.to_datetime,
+			dur_str, project);
+	fclose(file);
 
 	free(project);
 	free(workdir);
+	free(dur_str);
 	free(ts.start_date);
 	free(ts.from_datetime);
 	free(ts.to_datetime);
+	free(filepath);
 
 	return EXIT_SUCCESS;
 }

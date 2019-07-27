@@ -52,3 +52,12 @@ bool dir_exists(const char *dirpath)
 		return false;
 	}
 }
+
+char *get_file_path(char *parent_dir, char *name, char *suffix)
+{
+	int len = strlen(parent_dir) + 1 + strlen(name) + 1 + strlen(suffix) + 1;
+	char *file_path = (char *)malloc(sizeof(char) * len);
+	snprintf(file_path, len, "%s/%s.%s", parent_dir, name, suffix);
+
+	return file_path;
+}
