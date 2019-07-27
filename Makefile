@@ -1,5 +1,5 @@
 zeit: src/zeit.c src/duration.c src/utils.c
-	gcc -Wpedantic -std=c99 $^ -o $@
+	gcc -g -Wpedantic -std=c99 $^ -o $@
 
 test: utils_test duration_test
 

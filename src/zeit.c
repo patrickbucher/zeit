@@ -31,6 +31,8 @@ int main(int argc, char *argv[])
 	printf("\nworked %02d:%02d:%02d on %s\n",
 			dur.hours, dur.minutes, dur.seconds, project);
 
+	free(project);
+
 	exit(EXIT_SUCCESS);
 }
 

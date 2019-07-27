@@ -18,5 +18,7 @@ char *retain_alnum(char *str) {
 
 	char *cleansed = (char *)malloc(sizeof(char) * (w + 1));
 	strncpy(cleansed, buf, w);
+	free(buf);
+
 	return cleansed;
 }
