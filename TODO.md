@@ -4,6 +4,8 @@
 - [ ] make sure ~/.zeit folder exists on startup
 - [ ] append recorded time to file with current date, e.g. ~/.zeit/2019-07-27.csv
 - [ ] provide subcommands for reporting (daily summary, project-wide summary, etc.)
+- [ ] extract own time structures and functions to separate header/source files
+- [ ] extract utility functions to separate header/source files
 
 ## CSV file structure:
 
