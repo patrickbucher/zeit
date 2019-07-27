@@ -1,5 +1,5 @@
 zeit: zeit.c
-	gcc -Wall $^ -o $@
+	gcc -Wpedantic -std=c99 $^ -o $@
 
 clean:
 	rm -rf zeit
