@@ -15,7 +15,7 @@ void handle_sigint(int);
 
 static volatile bool run = true;
 
-const char *dirname= ".zeit";
+const char *dirname = ".zeit";
 
 int main(int argc, char *argv[])
 {
@@ -36,21 +36,24 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	time_t start = time(NULL);
+	time_t start, end;
+	time(&start);
 	signal(SIGINT, handle_sigint);
 	while (run) {
 		pause();
 	}
-	time_t end = time(NULL);
+	time(&end);
 
-	duration dur = to_duration(end - start);
-	printf("\nworked %02d:%02d:%02d on %s\n",
-			dur.hours, dur.minutes, dur.seconds, project);
+	timespan ts = to_timespan(start, end);
+	printf("\nfrom %s to %s worked %02d:%02d:%02d on %s\n", ts.from_date,
+			ts.to_date, ts.dur.hours, ts.dur.minutes, ts.dur.seconds, project);
 
 	free(project);
 	free(workdir);
+	free(ts.from_date);
+	free(ts.to_date);
 
-	exit(EXIT_SUCCESS);
+	return EXIT_SUCCESS;
 }
 
 void handle_sigint(int sig)
